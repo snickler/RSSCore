@@ -3,7 +3,14 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
     <Authors>Jeremy Sinclair</Authors>
-    <Copyright>© Jeremy Sinclair 2017</Copyright>
+    <Copyright>© Jeremy Sinclair 2018</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/snickler/RSSCore</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/snickler/RSSCore/blob/master/LICENSE</PackageLicenseUrl>
+    <NeutralLanguage></NeutralLanguage>
+    <PackageTags>RSS,aspnetcore</PackageTags>
+    <RepositoryUrl>https://github.com/snickler/RSSCore</RepositoryUrl>
+    <Description>ASPNETCore Middleware for generating RSS Feeds</Description>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.1" />
