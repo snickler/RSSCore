@@ -30,7 +30,7 @@ namespace Snickler.RSSCore.SampleWeb
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseRssFeed("/feed", new Models.RSSFeedOptions
+            app.UseRSSFeed("/feed", new Models.RSSFeedOptions
             {
                 Title = "Sample RSS Feed",
                 Copyright = "2017",
