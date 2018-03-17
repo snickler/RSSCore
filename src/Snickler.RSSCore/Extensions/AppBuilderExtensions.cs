@@ -5,7 +5,7 @@ namespace Snickler.RSSCore.Extensions
 {
    public static class AppBuilderExtensions
     {
-        public static IApplicationBuilder UseRssFeed(this IApplicationBuilder builder, string path, RSSFeedOptions options)
+        public static IApplicationBuilder UseRSSFeed(this IApplicationBuilder builder, string path, RSSFeedOptions options)
         {
             return builder.UseMiddleware<RSSMiddleware>(path, options);
         }
