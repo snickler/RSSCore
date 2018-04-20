@@ -28,6 +28,7 @@ namespace Snickler.RSSCore
                     await context.Response.WriteAsync(rssFeed).ConfigureAwait(false);
                 }
             }
+            await _next(context);
         }
     }
 }

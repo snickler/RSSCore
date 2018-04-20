@@ -11,6 +11,10 @@
     <PackageTags>RSS,aspnetcore</PackageTags>
     <RepositoryUrl>https://github.com/snickler/RSSCore</RepositoryUrl>
     <Description>ASPNETCore Middleware for generating RSS Feeds</Description>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>-Fixed issue with Middleware failing to advance to the next middlewares</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.1" />
