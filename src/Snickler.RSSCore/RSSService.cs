@@ -10,13 +10,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Snickler.RSSCore.Providers;
 using Snickler.RSSCore.Extensions;
+using Microsoft.Extensions.Caching.Memory;
+
 namespace Snickler.RSSCore
 {
     public class RSSService
     {
+        private readonly IMemoryCache _memoryCache;
         private readonly IRSSProvider _rssProvider;
-        public RSSService(IRSSProvider rssProvider)
+        public RSSService(IRSSProvider rssProvider, IMemoryCache memoryCache)
         {
+            _memoryCache = memoryCache;
             _rssProvider = rssProvider;
         }
 
@@ -32,6 +36,18 @@ namespace Snickler.RSSCore
             {
                 throw new ArgumentNullException(nameof(rssOptions.Title));
             }
+
+            return await _memoryCache.GetOrCreateAsync(rssOptions.Caching?.Key ?? "RSSCache", async caching =>
+            {
+                caching.SetAbsoluteExpiration(rssOptions.Caching?.CacheDuration ?? TimeSpan.FromDays(1));
+                return await BuildRSSFeedInternal(rssOptions);
+            });
+
+        }
+
+        private async Task<string> BuildRSSFeedInternal(RSSFeedOptions rssOptions)
+        {
+
 
             var sb = new StringBuilder();
             using (var _ = new StringWriter(sb))
