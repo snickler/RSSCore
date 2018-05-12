@@ -1,9 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Snickler.RSSCore.Models;
 using Snickler.RSSCore.Providers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Snickler.RSSCore.Extensions
 {

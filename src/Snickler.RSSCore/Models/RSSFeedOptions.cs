@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snickler.RSSCore.Providers;
+using System;
 using System.Globalization;
 
 namespace Snickler.RSSCore.Models
@@ -13,5 +14,6 @@ namespace Snickler.RSSCore.Models
         public Uri Url {get;set;}
         public Uri ImageUrl {get;set;}
         public CultureInfo Language {get;set;}
+        public IRSSCacheProvider Caching { get; set; }
     }
 }

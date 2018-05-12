@@ -16,19 +16,27 @@ namespace Snickler.RSSCore
             _urlPath = urlPath ?? throw new ArgumentNullException(nameof(urlPath));
             _rssOptions = rssOptions;
         }
-
+        
         public async Task Invoke(HttpContext context, RSSService rssService)
         {
             if(context.Request.Path.Equals(_urlPath))
             {
-                context.Response.ContentType = "application/rss+xml";
+                
                 var rssFeed = await rssService.BuildRSSFeed(_rssOptions).ConfigureAwait(false);
                 if(!string.IsNullOrEmpty(rssFeed))
                 {
+                    context.Response.ContentType = "application/rss+xml";
                     await context.Response.WriteAsync(rssFeed).ConfigureAwait(false);
                 }
+                else
+                {
+                    await _next(context);
+                }
             }
-            await _next(context);
+            else
+            {
+                await _next(context);
+            }
         }
     }
 }
