@@ -76,6 +76,30 @@ Set the options for your RSS Feed in `Configure` with `UseRSSFeed`
 
 ```
 
+### Optional RSS Caching Configuration
+
+By default, MemoryCache is used to cache the feed for 1 day. To be able to update the cache duration or cache key, add a new instance of the `MemoryCacheProvider` to the `Caching` property within the `RSSFeedOptions` class. 
+
+```csharp
+
+            app.UseRssFeed("/feed", new RSSFeedOptions
+            {
+                Title = "Snickler's Super Awesome RSS Feed",
+                Copyright = "2018",
+                Description = "The Best and Most Awesome RSS Feed Content",
+                ManagingEditor = "managingeditor@someaddress.com",
+                Webmaster = "webmaster@someaddress.com",
+                Url = new Uri("http://someaddress.com"),
+                Caching = new MemoryCacheProvider 
+                {
+                    CacheDuration = TimeSpan.FromDays(5),
+                    CacheKey = "SomeSuperAwesomeCacheKey"
+                }
+            });
+
+```
+
+
 With this example setup, you'll be able to access the feed at http://whateverurl.com/feed
 
 ### Example Project
