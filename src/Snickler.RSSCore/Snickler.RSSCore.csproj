@@ -13,7 +13,7 @@
     <Description>ASPNETCore Middleware for generating RSS Feeds</Description>
     <AssemblyVersion>1.0.0.2</AssemblyVersion>
     <FileVersion>1.0.0.2</FileVersion>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <PackageReleaseNotes>-Added MemoryCaching by default
 -Added UseWhen
 -Fixed issue with Middleware calling next improperly.

@@ -7,8 +7,8 @@ namespace Snickler.RSSCore.Models
         public string Title { get;set; }
         public string Content { get; set;}
         public Uri FeaturedImage { get;set; }
-        public List<string> Categories => new List<string>();
-        public List<string> Authors => new List<string>();
+        public List<string> Categories { get; } = new List<string>();
+        public List<string> Authors { get; } = new List<string>();
         public Uri LinkUri { get;set; }
         public Uri PermaLink { get;set; }
         public Uri CommentsUri { get;set; }
