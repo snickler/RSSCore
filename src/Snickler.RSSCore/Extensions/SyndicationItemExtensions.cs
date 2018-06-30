@@ -15,18 +15,6 @@ namespace Snickler.RSSCore.Extensions
                 throw new ArgumentException(nameof(rssItem));
             }
 
-            //Should probably have an item title
-            if(string.IsNullOrEmpty(rssItem.Title))
-            {
-                throw new ArgumentNullException(nameof(rssItem.Title));
-            }
-
-            //And some content
-            if(string.IsNullOrEmpty(rssItem.Content))
-            {
-                throw new ArgumentNullException(nameof(rssItem.Content));
-            }
-
             var syndicationItem = new SyndicationItem
             {
                 Title = rssItem.Title,
@@ -45,10 +33,15 @@ namespace Snickler.RSSCore.Extensions
             {
                 syndicationItem.AddLink(new SyndicationLink(rssItem.CommentsUri, RssLinkTypes.Comments));
             }
-        
-            rssItem.Authors.ForEach(author=> syndicationItem.AddContributor(new SyndicationPerson(null, author)));
-            rssItem.Categories.ForEach(category=> syndicationItem.AddCategory(new SyndicationCategory(category)));
-            
+            if(rssItem.Authors != null)
+            {
+                rssItem.Authors.ForEach(author => syndicationItem.AddContributor(new SyndicationPerson(null, author)));
+            }
+            if(rssItem.Categories != null)
+            {
+                rssItem.Categories.ForEach(category => syndicationItem.AddCategory(new SyndicationCategory(category)));
+            }
+
             syndicationItem.Published = rssItem.PublishDate;
 
             return syndicationItem;
