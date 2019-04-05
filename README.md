@@ -23,25 +23,22 @@ Create a provider class that implements `IRSSProvider` and returns a list of `RS
 public class SomeRSSProvider: IRSSProvider
 {
     public Task<IList<RSSItem>> RetrieveSyndicationItems()
+    {
+        IList<RSSItem> syndicationList = new List<RSSItem>();
+        var synd1 = new RSSItem("Sample Title 1", "Sample Content 1")
         {
-            IList<RSSItem> syndicationList = new List<RSSItem>();
-            var rssItem1 = new RSSItem()
-            {
-                Content = "Sample Content 1",
-                PermaLink = new Uri("http://www.sampleaddress.com/sample-1"),
-                LinkUri = new Uri("http://www.sampleaddress.com/Item.aspx?Id=423"),
-                LastUpdated = DateTime.Now,
-                PublishDate = DateTime.Now,
-                Title = "Sample Title 1",
-            };
+            PermaLink = new Uri("http://www.sampleaddress.com/sample-content-1"),
+            LinkUri = new Uri("http://www.sampleaddress.com/sample-content-1"),
+            LastUpdated = DateTime.Now,
+            PublishDate = DateTime.Now,
+            Categories = new List<string> { ".NET" },
+            Authors = new List<string> { "someuser@sampleaddress.com" }
+        };
 
-            rssItem1.Categories.Add(".NET");
-            rssItem1.Authors.Add("someuser@sampleaddress.com");
+        syndicationList.Add(synd1);
 
-            syndicationList.Add(synd1);
-
-            return Task.FromResult(syndicationList);
-        }
+        return Task.FromResult(syndicationList);
+    }
 }
 ```
 
@@ -50,30 +47,28 @@ public class SomeRSSProvider: IRSSProvider
 Add your provider to the service registration in `ConfigureServices` with the `AddRSSFeed` extension
 
 ```csharp
-       public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddRSSFeed<SomeRSSProvider>();
-            services.AddMvc();
-        }
+	public void ConfigureServices(IServiceCollection services)
+	{
+		services.AddRSSFeed<SomeRSSProvider>();
+		services.AddMvc();
+	}
 ```
 
 Set the options for your RSS Feed in `Configure` with `UseRSSFeed`
 
 ```csharp
-
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    {
+        app.UseRssFeed("/feed", new RSSFeedOptions
         {
-            app.UseRssFeed("/feed", new RSSFeedOptions
-            {
-                Title = "Snickler's Super Awesome RSS Feed",
-                Copyright = "2018",
-                Description = "The Best and Most Awesome RSS Feed Content",
-                ManagingEditor = "managingeditor@someaddress.com",
-                Webmaster = "webmaster@someaddress.com",
-                Url = new Uri("http://someaddress.com")
-            });
-        }
-
+            Title = "Snickler's Super Awesome RSS Feed",
+            Copyright = "2018",
+            Description = "The Best and Most Awesome RSS Feed Content",
+            ManagingEditor = "managingeditor@someaddress.com",
+            Webmaster = "webmaster@someaddress.com",
+            Url = new Uri("http://someaddress.com")
+        });
+    }
 ```
 
 ### Optional RSS Caching Configuration
@@ -81,24 +76,21 @@ Set the options for your RSS Feed in `Configure` with `UseRSSFeed`
 By default, MemoryCache is used to cache the feed for 1 day. To be able to update the cache duration or cache key, add a new instance of the `MemoryCacheProvider` to the `Caching` property within the `RSSFeedOptions` class. 
 
 ```csharp
-
-            app.UseRssFeed("/feed", new RSSFeedOptions
-            {
-                Title = "Snickler's Super Awesome RSS Feed",
-                Copyright = "2018",
-                Description = "The Best and Most Awesome RSS Feed Content",
-                ManagingEditor = "managingeditor@someaddress.com",
-                Webmaster = "webmaster@someaddress.com",
-                Url = new Uri("http://someaddress.com"),
-                Caching = new MemoryCacheProvider 
-                {
-                    CacheDuration = TimeSpan.FromDays(5),
-                    CacheKey = "SomeSuperAwesomeCacheKey"
-                }
-            });
-
+    app.UseRssFeed("/feed", new RSSFeedOptions
+    {
+        Title = "Snickler's Super Awesome RSS Feed",
+        Copyright = "2018",
+        Description = "The Best and Most Awesome RSS Feed Content",
+        ManagingEditor = "managingeditor@someaddress.com",
+        Webmaster = "webmaster@someaddress.com",
+        Url = new Uri("http://someaddress.com"),
+        Caching = new MemoryCacheProvider 
+        {
+            CacheDuration = TimeSpan.FromDays(5),
+            CacheKey = "SomeSuperAwesomeCacheKey"
+        }
+    });
 ```
-
 
 With this example setup, you'll be able to access the feed at http://whateverurl.com/feed
 
